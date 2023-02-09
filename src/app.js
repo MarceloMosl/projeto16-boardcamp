@@ -1,6 +1,5 @@
 import express, { json } from "express";
 import cors from "cors";
-import { db } from "./config/database.js";
 import gameRoute from "./routes/gamesRoute.js";
 
 const app = express();
