@@ -11,7 +11,7 @@ export async function getCustomers(req, res) {
       if (customers.rows.length === 0) {
         return res.sendStatus(404);
       }
-      return res.send(customers.rows);
+      return res.send(customers.rows[0]);
     } catch (error) {
       return res.send(error);
     }

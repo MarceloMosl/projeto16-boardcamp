@@ -6,6 +6,7 @@ import schemaCustomer from "../schemas/customerSchema.js";
 const customerRoute = Router();
 
 customerRoute.get("/customers/:id", getCustomers);
+customerRoute.get("/customers", getCustomers);
 customerRoute.post("/customers", validateSchema(schemaCustomer), postCustomers);
 
 // validateSchema(schemaCustomer),
