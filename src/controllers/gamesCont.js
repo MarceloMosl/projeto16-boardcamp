@@ -22,5 +22,13 @@ export async function postGames(req, res) {
   if (stockTotal <= 0 || pricePerDay <= 0 || name == "")
     return res.sendStatus(400);
 
-  res.sendStatus(200);
+  try {
+    await db.query(
+      `insert into games (name, image, "stockTotal", "pricePerDay") values ($1,$2,$3,$4)`,
+      [name, image, stockTotal, pricePerDay]
+    );
+    res.sendStatus(200);
+  } catch (error) {
+    res.send(error);
+  }
 }

@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import cors from "cors";
-import gameRoute from "./routes/gamesRoute.js";
+import gameRoute from "./routers/gamesRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
