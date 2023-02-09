@@ -4,9 +4,9 @@ export async function getGames(req, res) {
   try {
     const games = await db.query("SELECT * FROM games");
 
-    res.send(games.rows);
+    return res.send(games.rows);
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 }
 
@@ -24,11 +24,11 @@ export async function postGames(req, res) {
 
   try {
     await db.query(
-      `insert into games (name, image, "stockTotal", "pricePerDay") values ($1,$2,$3,$4)`,
+      `INSERT INTO games (name, image, "stockTotal", "pricePerDay") VALUES ($1,$2,$3,$4)`,
       [name, image, stockTotal, pricePerDay]
     );
-    res.sendStatus(200);
+    return res.sendStatus(201);
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 }
