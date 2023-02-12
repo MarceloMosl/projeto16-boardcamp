@@ -1,7 +1,4 @@
-import { db } from "../config/database.js";
-
-export async function getRentals(req, res) {
-  const rents = await db.query(`SELECT json_build_object(
+SELECT json_build_object(
     'id', rentals.id,
     'customerId', rentals."customerId",
     'gameId', rentals."gameId",
@@ -10,19 +7,20 @@ export async function getRentals(req, res) {
     'returnDate', rentals."returnDate",
     'originalPrice', rentals."originalPrice",
     'delayFee', rentals."delayFee",
-    'customer', json_build_object(
+    'customers', json_build_object(
         'id', customers.id,
         'name', customers.name
     ),
-    'game', json_build_object(
+    'games', json_build_object(
         'id', games.id,
         'name', games.name
     )) FROM rentals JOIN customers ON rentals."customerId" = customers.id
     JOIN games ON rentals."gameId" = games.id;
-    `);
 
-  const rentsPromise = [];
-  await rents.rows.map((a) => rentsPromise.push(a.json_build_object));
 
-  res.send(rentsPromise);
-}
+    SELECT rentals.*, games.id, games.name, customers.id, customers.name
+      FROM rentals
+      JOIN games
+      ON games.id = rentals."gameId"
+      JOIN customers
+      ON customers.id = rentals."customerId";
