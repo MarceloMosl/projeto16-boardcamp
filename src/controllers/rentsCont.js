@@ -89,7 +89,7 @@ export async function endRent(req, res) {
   try {
     await db.query(
       `UPDATE rentals SET "returnDate" = $1, "delayFee" = $2 WHERE id = $3`,
-      [dayjs().format("YYYY/MM/DD"), 3 * costPerDay, id]
+      [dayjs().format("YYYY/MM/DD"), delayFeeCont * costPerDay, id]
     );
     return res.sendStatus(200);
   } catch (error) {
