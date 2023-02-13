@@ -48,14 +48,14 @@ export async function postRentals(req, res) {
     [gameId]
   );
 
-  if (gameInStock.length - gameExist.rows[0].stockTotal < 0)
+  if (gameExist.rows[0].stockTotal - gameInStock.rows.length < 0)
     return res.sendStatus(400);
 
   try {
     await db.query(
       `insert into rentals
-        ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
-        values ($1,$2,$3,$4,$5,$6, $7)`,
+          ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
+          values ($1,$2,$3,$4,$5,$6, $7)`,
       [
         customerId,
         gameId,
