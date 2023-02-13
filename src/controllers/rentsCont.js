@@ -82,9 +82,7 @@ export async function endRent(req, res) {
 
   if (rent.rows[0].returnDate !== null) return res.sendStatus(400);
 
-  const delayFeeCont = dayjs()
-    .format("YYYY/MM/DD")
-    .diff(rent.rows[0].rentDate, "day");
+  const delayFeeCont = dayjs().diff(rent.rows[0].rentDate, "day");
 
   const costPerDay = rent.rows[0].originalPrice / rent.rows[0].daysRented;
 
