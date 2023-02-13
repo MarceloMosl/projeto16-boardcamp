@@ -43,12 +43,12 @@ export async function postRentals(req, res) {
   if (gameExist.rows.length === 0 || customerExist.rows.length === 0)
     return res.sendStatus(400);
 
-  const gameInStock = await db.query(
+  const gameInRent = await db.query(
     `SELECT * FROM rentals where "gameId" = $1`,
     [gameId]
   );
 
-  if (gameExist.rows[0].stockTotal - gameInStock.rows.length < 0)
+  if (gameExist.rows[0].stockTotal == gameInRent.rows.length)
     return res.sendStatus(400);
 
   try {
