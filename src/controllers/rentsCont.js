@@ -87,12 +87,25 @@ export async function endRent(req, res) {
     "day"
   );
 
-  const costPerDay = rent.rows[0].originalPrice / rent.rows[0].daysRented;
+  const date = rent.rows[0].rentDate;
+
+  const costPerDay = await db.query(`SELECT * FROM games WHERE id = $1`, [
+    rent.rows[0].gameId,
+  ]);
+
+  let delayFeeResult = 0;
+
+  console.log(rent.rows[0].daysRented);
+
+  if (delayFeeCont - rent.rows[0].daysRented > 0) {
+    delayFeeResult =
+      (delayFeeCont - rent.rows[0].daysRented) * costPerDay.rows[0].pricePerDay;
+  }
 
   try {
     await db.query(
       `UPDATE rentals SET "returnDate" = $1, "delayFee" = $2 WHERE id = $3`,
-      [dayjs().format("YYYY/MM/DD"), delayFeeCont * costPerDay, id]
+      [dayjs().format("YYYY/MM/DD"), delayFeeResult, id]
     );
     return res.sendStatus(200);
   } catch (error) {
