@@ -107,7 +107,7 @@ export async function deleteRent(req, res) {
 
   if (rentEnded.rows.length === 0) return res.sendStatus(404);
 
-  if (rentEnded.rows.returnDate === null) return res.sendStatus(400);
+  if (rentEnded.rows[0].returnDate === null) return res.sendStatus(400);
 
   try {
     await db.query(`DELETE from rentals where id = $1`, [id]);
